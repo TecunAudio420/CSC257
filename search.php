@@ -1,3 +1,17 @@
+<?php 
+  session_start(); 
+
+  if (!isset($_SESSION['username'])) {
+  	$_SESSION['msg'] = "You must log in first";
+  	header('location: login.php');
+  }
+  if (isset($_GET['logout'])) {
+  	session_destroy();
+  	unset($_SESSION['username']);
+  	header("location: login.php");
+  }
+?>
+
 <?php
 
 require('search_api.php');
@@ -40,12 +54,14 @@ $search = new Search();
         NASA Mars Rover API Image Search
     </h1>
     <form action="" method="GET">
-        <em>Please enter a date in YYYY-MM-DD format</em>
+        <em><font color="#ffffff">Please enter a date in YYYY-MM-DD format</em>
         <input id="searchTerm" name="search" type="text" placeholder="YYYY-MM-DD" value="<?php if(!empty($_GET['search'])) { echo $_GET['search']; } ?>"/>
         <button id="search">
             Search
         </button>
     </form>
+
+
     
     <div id="content">
         <?php
